@@ -4,8 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, request, jsonify
 import re
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,12 +19,7 @@ db = firestore.client()
 
 app = Flask(__name__)
 
-# Initialize rate limiter
-limiter = Limiter(
-    app,
-    key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"]
-)
+
 
 def extract_preferences(user_input):
     preferences = {}
