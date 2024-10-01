@@ -258,16 +258,15 @@ def locate_app(script_info, module_name, app_name, raise_if_not_found=True):
 
     try:
         __import__(module_name)
-    except ImportError:
+    except ImportError as e:
         # Reraise the ImportError if it occurred within the imported module.
         # Determine this by checking whether the trace has a depth > 1.
         if sys.exc_info()[2].tb_next:
             raise NoAppException(
-                f"While importing {module_name!r}, an ImportError was"
-                f" raised:\n\n{traceback.format_exc()}"
-            ) from None
+                f"While importing {module_name!r}, an ImportError was raised."
+            ) from e
         elif raise_if_not_found:
-            raise NoAppException(f"Could not import {module_name!r}.") from None
+            raise NoAppException(f"Could not import {module_name!r}.") from e
         else:
             return
 
