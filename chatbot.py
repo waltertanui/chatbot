@@ -111,7 +111,7 @@ def home():
     return jsonify({"message": "Welcome to the Car Recommendation Chatbot API"}), 200
 
 @app.route('/chat', methods=['POST'])
-@limiter.limit("10 per minute")
+
 def chat():
     if not request.json or 'message' not in request.json:
         return jsonify({"error": "Invalid request. 'message' field is required."}), 400
